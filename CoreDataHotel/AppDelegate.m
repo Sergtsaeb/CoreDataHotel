@@ -89,7 +89,7 @@
             if (saveError) {
                 NSLog(@"Error saving to core data");
             } else {
-                NSLog(@"Savedd to core data, successssss");
+                NSLog(@"Savedd to core data, success");
             }
             
     }

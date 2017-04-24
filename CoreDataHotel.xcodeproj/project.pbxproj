@@ -15,6 +15,7 @@
 		C055E8691EAE5F5D00BF5933 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C055E8671EAE5F5D00BF5933 /* LaunchScreen.storyboard */; };
 		C055E8721EAE6D2B00BF5933 /* AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = C055E8711EAE6D2B00BF5933 /* AutoLayout.m */; };
 		C055E8741EAE951D00BF5933 /* hotels.json in Resources */ = {isa = PBXBuildFile; fileRef = C055E8731EAE951D00BF5933 /* hotels.json */; };
+		C056BAFF1EAEA4850023D52C /* HotelsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C056BAFE1EAEA4850023D52C /* HotelsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,8 @@
 		C055E8701EAE6D2B00BF5933 /* AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoLayout.h; sourceTree = "<group>"; };
 		C055E8711EAE6D2B00BF5933 /* AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoLayout.m; sourceTree = "<group>"; };
 		C055E8731EAE951D00BF5933 /* hotels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hotels.json; sourceTree = "<group>"; };
+		C056BAFD1EAEA4850023D52C /* HotelsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelsViewController.h; sourceTree = "<group>"; };
+		C056BAFE1EAEA4850023D52C /* HotelsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +89,8 @@
 				C055E85A1EAE5F5D00BF5933 /* AppDelegate.m */,
 				C055E85C1EAE5F5D00BF5933 /* ViewController.h */,
 				C055E85D1EAE5F5D00BF5933 /* ViewController.m */,
+				C056BAFD1EAEA4850023D52C /* HotelsViewController.h */,
+				C056BAFE1EAEA4850023D52C /* HotelsViewController.m */,
 			);
 			name = Controller;
 			path = CoreDataHotel;
@@ -189,6 +194,7 @@
 				C055E85E1EAE5F5D00BF5933 /* ViewController.m in Sources */,
 				C055E8641EAE5F5D00BF5933 /* CoreDataHotel.xcdatamodeld in Sources */,
 				C055E85B1EAE5F5D00BF5933 /* AppDelegate.m in Sources */,
+				C056BAFF1EAEA4850023D52C /* HotelsViewController.m in Sources */,
 				C055E8581EAE5F5D00BF5933 /* main.m in Sources */,
 				C055E8721EAE6D2B00BF5933 /* AutoLayout.m in Sources */,
 			);
@@ -341,6 +347,7 @@
 				C055E86F1EAE5F5D00BF5933 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
