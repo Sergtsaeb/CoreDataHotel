@@ -9,13 +9,17 @@
 #import "HotelsViewController.h"
 
 #import "AppDelegate.h"
+
 #import "Hotel+CoreDataClass.h"
 #import "Hotel+CoreDataProperties.h"
 
-@interface HotelsViewController () <UITableViewDataSource>
+#import "AutoLayout.h"
+
+@interface HotelsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property(strong, nonatomic) NSArray *allHotels;
 @property(strong, nonatomic) UITableView *tableView;
+
 
 @end
 
@@ -24,28 +28,36 @@
 -(void)loadView {
     [super loadView];
     
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    [self.view addSubview:self.tableView];
+    [self allHotels];
+    
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor blackColor];
     //add tableview as subview and apply constraints
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HotelCell"];
     
-    
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 
--(NSArray *)allhotels {
-    if (! _allHotels) {
+-(NSArray *)allHotels {
+    if (!_allHotels) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         
         NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
         
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotels"];
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Hotel"];
         
         NSError *fetchError;
         NSArray *hotels = [context executeFetchRequest:request error:&fetchError];
@@ -62,24 +74,31 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HotelCell" forIndexPath:indexPath];
     
-    if (cell == nil) {
-        
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-    }
+    NSArray *hotels = _allHotels;
+    Hotel *currentHotel = hotels[indexPath.row];
+    cell.textLabel.text = currentHotel.name;
     
+//    [cell updateConstraints];
     
     return cell;
     
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+//    [self showDetailViewController:tableView sender:nil];
+    
+    NSLog(@"selected %ld row", (long)indexPath.row);
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return _allHotels.count;
+    return [_allHotels count];
+    NSLog(@"%lu", (unsigned long)_allHotels.count);
 }
+
+
 
 @end

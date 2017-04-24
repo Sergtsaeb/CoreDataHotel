@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "AutoLayout.h"
+#import "HotelsViewController.h"
 
 @interface ViewController ()
 
@@ -38,28 +39,15 @@
     
     [browseButton addTarget:self action:@selector(browseButtonSelected) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
-//    browseHeight.constant = 100;
-    
 }
 
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([[segue identifier] isEqualToString:@"HotelsViewController"])
-    {
-        // Get reference to the destination view controller
-        ViewController *vc = [segue destinationViewController];
-        
-        // Pass any objects to the view controller here, like...
-//        [vc setMyObjectHere:object];
-    }
-}
+
 
 -(void)browseButtonSelected {
-    [self performSegueWithIdentifier:@"HotelsViewController" sender:nil];
-   
-    NSLog(@"Work on lab!");
+    
+    HotelsViewController *hotelVC =[[HotelsViewController alloc] init];
+    [self.navigationController pushViewController: hotelVC animated:YES];
+
 }
 
 
