@@ -45,7 +45,6 @@
     }
         
         if (count == 0) {
-            
             NSDictionary *hotels = [[NSDictionary alloc]init];
             NSDictionary *rooms = [[NSDictionary alloc]init];
             
