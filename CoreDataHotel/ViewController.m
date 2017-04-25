@@ -42,14 +42,11 @@
 }
 
 
-
 -(void)browseButtonSelected {
     
     HotelsViewController *hotelVC =[[HotelsViewController alloc] init];
     [self.navigationController pushViewController: hotelVC animated:YES];
-
 }
-
 
 
 -(UIButton *)createButtonWithTitle:(NSString *)title {
