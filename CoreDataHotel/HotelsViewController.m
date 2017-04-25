@@ -92,6 +92,8 @@
     RoomsViewController *roomsVC = [[RoomsViewController alloc] init];
     [self.navigationController pushViewController:roomsVC animated:YES];
     
+    roomsVC.selectedHotel = self.allHotels[indexPath.row];
+    
     NSLog(@"selected %ld row", (long)indexPath.row);
 }
 

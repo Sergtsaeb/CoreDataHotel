@@ -92,6 +92,18 @@
     
 }
 
++(NSLayoutConstraint *)topConstraintFrom:(UIView *)view
+                                  toView:(UIView *)otherView {
+    return [AutoLayout genericConstraintFrom:view toView:otherView withAttribute:NSLayoutAttributeTop];
+    
+}
+
++(NSLayoutConstraint *)bottomConstraintFrom:(UIView *)view
+                                     toView:(UIView *)otherView {
+    return [AutoLayout genericConstraintFrom:view toView:otherView withAttribute:NSLayoutAttributeBottom];
+    
+}
+
 
 
 @end

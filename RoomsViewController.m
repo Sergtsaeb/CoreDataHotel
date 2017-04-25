@@ -13,6 +13,9 @@
 #import "AutoLayout.h"
 #import "AppDelegate.h"
 
+#import "Hotel+CoreDataClass.h"
+
+
 @interface RoomsViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property(strong, nonatomic) NSArray *allRooms;
@@ -27,9 +30,8 @@
     
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     [self.view addSubview:self.roomTableView];
-    [self allRooms];
     
-
+    
 }
 
 - (void)viewDidLoad {
@@ -37,6 +39,7 @@
     
     self.roomTableView.dataSource = self;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RoomCell"];
+    self.allRooms = [self.selectedHotel.rooms allObjects];
     
 }
 
@@ -69,13 +72,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RoomCell" forIndexPath:indexPath];
-    
-    NSArray *rooms = _allRooms;
-    Room *currentRoom = rooms[indexPath.row];
-    
-    NSString *strValue = [@(currentRoom.number) stringValue];
-    
-    cell.textLabel.text = strValue;
+
+    Room *room = self.allRooms[indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%hd", room.number];
     
     return cell;
 }
