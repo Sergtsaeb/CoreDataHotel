@@ -43,7 +43,6 @@
     
 }
 
-
 -(NSArray *)allRooms {
     if (!_allRooms) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];

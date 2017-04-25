@@ -30,8 +30,10 @@
     
     if(!_availableRooms) {
         
+        //instantiate app delegate
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-                                    
+        
+        //create fetch request for Reservation entity
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
         request.predicate = [NSPredicate predicateWithFormat:@"startDate <= %@ AND endDate >= %@", self.endDate, self.startDate]; //reference self.startDate for lab 
         
@@ -65,6 +67,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"%@", _startDate);
+    NSLog(@"%@", _endDate);
    
 }
 
@@ -88,9 +93,9 @@
     
     UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    Room *currentToom = self.availableRooms[indexPath.row];
+    Room *currentRoom = self.availableRooms[indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%i", currentToom.number];
+    cell.textLabel.text = [NSString stringWithFormat:@"%i", currentRoom.number];
     
     return cell;
 }
