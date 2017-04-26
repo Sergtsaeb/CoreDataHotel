@@ -89,8 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				C01B159F1EB111D400236461 /* CoreDataHotelTests.m */,
-				C01B15A11EB111D400236461 /* Info.plist */,
 				C01B15A71EB1144600236461 /* AutoLayoutTests.m */,
+				C01B15A11EB111D400236461 /* Info.plist */,
 			);
 			path = CoreDataHotelTests;
 			sourceTree = "<group>";
