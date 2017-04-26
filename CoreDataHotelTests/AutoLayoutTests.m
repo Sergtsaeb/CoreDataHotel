@@ -46,6 +46,9 @@
 
 
 -(void)testgenericConstraintFromtoViewwithAttribute {
+    
+    
+    
     XCTAssertNotNil(self.testController, @"The testController is nil!");
     XCTAssertNotNil(self.testView1, @"self.testView1 is nil!");
     XCTAssertNotNil(self.testView1, @"self.testView2 is nil!");
