@@ -113,8 +113,6 @@
     [self.startDate setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.endDate setTranslatesAutoresizingMaskIntoConstraints:NO];
     
-    
-                          
 }
 
 @end

@@ -50,7 +50,7 @@
             
             NSString *path = [[NSBundle mainBundle]pathForResource:@"hotels" ofType:@"json"];
             
-            NSDate *jsonData = [NSData dataWithContentsOfFile:path];
+            NSData *jsonData = [NSData dataWithContentsOfFile:path];
             
             NSError *jsonError;
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:jsonData

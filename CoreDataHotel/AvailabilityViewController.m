@@ -23,6 +23,7 @@
 @property(strong, nonatomic) UITableView *tableView;
 @property(strong, nonatomic) NSArray *availableRooms;
 
+
 @end
 
 @implementation AvailabilityViewController
@@ -54,6 +55,7 @@
         _availableRooms = [appDelegate.persistentContainer.viewContext executeFetchRequest:roomRequest error:&availableRoomError];
         
     }
+    
     
     return _availableRooms;
 }
@@ -102,9 +104,13 @@
     return cell;
 }
 
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     BookViewController *bookVC = [[BookViewController alloc]init];
+    bookVC.selectedRoom = self.availableRooms[indexPath.row];
+    bookVC.startDate = self.startDate;
+    bookVC.endDate = self.endDate;
     [self.navigationController pushViewController:bookVC animated:YES];
     NSLog(@"Selected");
 }
