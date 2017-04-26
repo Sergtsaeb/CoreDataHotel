@@ -10,6 +10,7 @@
 #import "AutoLayout.h"
 #import "HotelsViewController.h"
 #import "DatePickerViewController.h"
+#import "LookupReservationViewController.h"
 
 @interface ViewController ()
 
@@ -77,7 +78,10 @@
 
 -(void)lookupButtonSelected {
     
-    //transition to  the LookUpReservationController 
+    //transition to  the LookUpReservationController
+    
+    LookupReservationViewController *ResLookup = [[LookupReservationViewController alloc]init];
+    [self.navigationController pushViewController:ResLookup animated:YES];
     
 }
 

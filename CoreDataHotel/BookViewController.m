@@ -8,10 +8,13 @@
 
 #import "BookViewController.h"
 #import "AutoLayout.h"
+
 #import "Guest+CoreDataClass.h"
 #import "Guest+CoreDataProperties.h"
+
 #import "Reservation+CoreDataClass.h"
 #import "Reservation+CoreDataProperties.h"
+
 #import "AppDelegate.h"
 
 @interface BookViewController () <UITextFieldDelegate>
@@ -81,7 +84,6 @@
 }
 
 -(void)bookButtonPressed {
-    NSLog(@"Sup");
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
@@ -114,10 +116,10 @@
         NSLog(@"Can't Save! %@ %@", bookError, [bookError localizedDescription]);
         [bookError userInfo];
 //        UIAlertAction *alert = [UIAlertAction actionWithTitle:@"Error messages suck" style:UIAlertActionStyleDestructive handler:nil];
-        
     } else {
         NSLog(@"Saved successfully");
         NSLog(@"%@", [reservation.guest firstName]);
+        
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
     
@@ -134,8 +136,6 @@
     } else if (textField == self.email) {
         [self.firstName becomeFirstResponder];
     }
-    
-    
     
     //method
     

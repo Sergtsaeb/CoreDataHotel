@@ -105,9 +105,6 @@
     [AutoLayout fullScreenConstraintsWithVFLForView:self.tableView];
 }
 
-
-
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     id<NSFetchedResultsSectionInfo> sectionInfo = [[self.availableRooms sections] objectAtIndex:section];
