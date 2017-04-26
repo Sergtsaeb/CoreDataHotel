@@ -87,17 +87,26 @@
     
     NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
     
-//    Guest *newGuest = [[Guest alloc]initWithContext:context];
+    Reservation *reservation = [NSEntityDescription insertNewObjectForEntityForName:@"Reservation" inManagedObjectContext:context];
     
-    Guest *newGuest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:context];
+    reservation.startDate = [NSDate date];
+    reservation.endDate = [NSDate date];
+    reservation.room = self.selectedRoom;
+    
+    self.selectedRoom.reservation = reservation;
+    
+    reservation.Guest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:context];
+    reservation.guest.firstName = self.firstName.text;
+    reservation.guest.lastName = self.lastName.text;
+    reservation.guest.email = self.email.text;
     
 //    newGuest.firstName = self.firstName.text;
 //    newGuest.lastName = self.lastName.text;
 //    newGuest.email = self.email.text;
     
-    [newGuest setFirstName: self.firstName.text];
-    [newGuest setLastName: self.lastName.text];
-    [newGuest setEmail: self.email.text];
+//    [newGuest setFirstName: self.firstName.text];
+//    [newGuest setLastName: self.lastName.text];
+//    [newGuest setEmail: self.email.text];
     
     NSError *bookError = nil;
     
@@ -106,10 +115,11 @@
         [bookError userInfo];
     } else {
         NSLog(@"Saved successfully");
-        NSLog(@"%@", [newGuest firstName]);
+        NSLog(@"%@", [reservation.guest firstName]);
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
     
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+   
     
 }
 
