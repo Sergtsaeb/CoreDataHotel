@@ -95,7 +95,7 @@
     
     self.selectedRoom.reservation = reservation;
     
-    reservation.Guest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:context];
+    reservation.guest = [NSEntityDescription insertNewObjectForEntityForName:@"Guest" inManagedObjectContext:context];
     reservation.guest.firstName = self.firstName.text;
     reservation.guest.lastName = self.lastName.text;
     reservation.guest.email = self.email.text;
@@ -113,13 +113,13 @@
     if (![context save:&bookError]) {
         NSLog(@"Can't Save! %@ %@", bookError, [bookError localizedDescription]);
         [bookError userInfo];
+//        UIAlertAction *alert = [UIAlertAction actionWithTitle:@"Error messages suck" style:UIAlertActionStyleDestructive handler:nil];
+        
     } else {
         NSLog(@"Saved successfully");
         NSLog(@"%@", [reservation.guest firstName]);
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    
-   
     
 }
 
