@@ -24,18 +24,35 @@
     [super setUp];
     
     self.testController = [[UIViewController alloc] init];
+    self.testView1 = [[UIView alloc]init];
+     self.testView2 = [[UIView alloc]init];
+    
+    [self.testController.view addSubview:self.testView1];
+    [self.testController.view addSubview:self.testView2];
     
 }
 
 - (void)tearDown {
-    [super tearDown];
+    
+    //tearing down properties
+    self.testController = nil;
+    self.testView1 = nil;
+    self.testView2 = nil;
     
     [super tearDown];
     
 }
 
--(void)testViewControllerNotNil {
+
+
+-(void)testgenericConstraintFromtoViewwithAttribute {
     XCTAssertNotNil(self.testController, @"The testController is nil!");
+    XCTAssertNotNil(self.testView1, @"self.testView1 is nil!");
+    XCTAssertNotNil(self.testView1, @"self.testView2 is nil!");
+    
+    id constraint = [AutoLayout genericConstraintFrom:self.testView1 toView:self.testView2 withAttribute:NSLayoutAttributeTop];
+    
+    XCTAssert([constraint isKindOfClass:[NSLayoutConstraint class]], @"Constraint is not an instance of NSLayoutConstraint");
 }
 
 
