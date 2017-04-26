@@ -49,7 +49,7 @@
     
     NSDate *startDate = self.startDate.date;
     
-    if ([[NSDate date] timeIntervalSinceReferenceDate] > [startDate timeIntervalSinceReferenceDate]) {
+    if ([[NSDate date] timeIntervalSinceReferenceDate] < [startDate timeIntervalSinceReferenceDate]) {
         self.startDate.date = [NSDate date];
         return;
     }

@@ -16,8 +16,9 @@
 #import "Room+CoreDataProperties.h"
 
 #import "AppDelegate.h"
+#import "BookViewController.h"
 
-@interface AvailabilityViewController ()<UITableViewDataSource>
+@interface AvailabilityViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property(strong, nonatomic) UITableView *tableView;
 @property(strong, nonatomic) NSArray *availableRooms;
@@ -78,6 +79,7 @@
     [self.view addSubview:self.tableView];
     
     self.tableView.dataSource = self;
+    self.tableView.delegate = self;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
@@ -98,6 +100,13 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%i", currentRoom.number];
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    BookViewController *bookVC = [[BookViewController alloc]init];
+    [self.navigationController pushViewController:bookVC animated:YES];
+    NSLog(@"Selected");
 }
 
 
