@@ -50,7 +50,7 @@
             
             NSString *path = [[NSBundle mainBundle]pathForResource:@"hotels" ofType:@"json"];
             
-            NSDate *jsonData = [NSData dataWithContentsOfFile:path];
+            NSData *jsonData = [NSData dataWithContentsOfFile:path];
             
             NSError *jsonError;
             NSDictionary *jsonDictionary = [NSJSONSerialization JSONObjectWithData:jsonData
@@ -73,9 +73,11 @@
                     
                     Room *newRoom = [NSEntityDescription insertNewObjectForEntityForName:@"Room" inManagedObjectContext:self.persistentContainer.viewContext];
                     
-                    newRoom.number = (NSInteger)room[@"number"];
-                    newRoom.beds = (NSInteger)room[@"beds"];
-                    newRoom.rate = (NSInteger)room[@"rate"];
+                    
+                    NSNumber *number = room[@"number"];
+                    newRoom.number = [number integerValue];
+                    newRoom.beds = [(NSNumber *)room[@"beds"] intValue];
+                    newRoom.rate = [(NSNumber *)room[@"rate"] floatValue];
                     
                     newRoom.hotel = newHotel;
 
