@@ -77,7 +77,6 @@
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
-
 -(NSFetchedResultsController *)allReservations {
     if (!_allReservations) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
@@ -88,10 +87,10 @@
         NSSortDescriptor *roomNumberDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"room.number" ascending:YES];
         NSArray *sortDescriptors = [NSArray arrayWithObjects:hotelDescriptor, roomNumberDescriptor, nil];
         
-        reservationRequest.sortDescriptors = @[sortDescriptors];
+        reservationRequest.sortDescriptors = @[hotelDescriptor];
         reservationRequest.sortDescriptors = @[roomNumberDescriptor];
         
-        _allReservations = [[NSFetchedResultsController alloc]initWithFetchRequest:reservationRequest managedObjectContext:appDelegate.persistentContainer.viewContext sectionNameKeyPath:@"hotel.name" cacheName:nil];
+        _allReservations = [[NSFetchedResultsController alloc]initWithFetchRequest:reservationRequest managedObjectContext:appDelegate.persistentContainer.viewContext sectionNameKeyPath:@"reservation.guest.firstName" cacheName:nil];
         
         NSError *reservationError;
         [_allReservations performFetch:&reservationError];

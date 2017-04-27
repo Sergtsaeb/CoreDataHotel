@@ -15,6 +15,10 @@
 #import "Room+CoreDataClass.h"
 #import "Room+CoreDataProperties.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
+
 @interface AppDelegate ()
 
 @property(strong, nonatomic) UINavigationController *navController;
@@ -29,6 +33,9 @@
     
     [self setupRootViewController];
     [self bootstrapApp];
+    
+    [Fabric with:@[[Crashlytics class]]];
+
     
     return YES;
 }
