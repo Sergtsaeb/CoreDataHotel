@@ -107,6 +107,8 @@
     
     NSError *bookError = nil;
     
+    [context save:&bookError];
+    
     if (![context save:&bookError]) {
         NSLog(@"Can't Save! %@ %@", bookError, [bookError localizedDescription]);
         [bookError userInfo];

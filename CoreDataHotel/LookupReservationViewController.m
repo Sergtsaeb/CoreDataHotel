@@ -14,12 +14,13 @@
 
 
 
-@interface LookupReservationViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface LookupReservationViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating>
+
 
 @property(strong, nonatomic)UISearchBar *searchBar;
 @property(strong, nonatomic)UISearchController *searchBarController;
 @property(strong, nonatomic)UITableView *tableView;
-@property(strong, nonatomic)NSArray *allReservations;
+@property(strong, nonatomic)NSFetchedResultsController *allReservations;
 
 @property(strong, nonatomic)NSMutableArray *filteredList;
 @property(strong, nonatomic)NSMutableArray *list;
@@ -58,8 +59,15 @@
 //    self.searchBar.delegate = self;
 //    self.searchBarController.delegate = self;
     
-    self.searchBarController.dimsBackgroundDuringPresentation = NO;
-    self.searchBarController.searchBar.delegate = self;
+//    self.searchBarController.dimsBackgroundDuringPresentation = NO;
+//    self.searchBarController.searchBar.delegate = self;
+//    _searchBarController.searchBar.sizeToFit()
+//    self.tableView.tableHeaderView = searchController.searchBar;
+    
+    _searchBarController.searchResultsUpdater = self;
+    _searchBarController.hidesNavigationBarDuringPresentation = false;
+    _searchBarController.dimsBackgroundDuringPresentation = false;
+
     
 }
 
@@ -71,30 +79,35 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"lookupCell"];
-    
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-//    [AutoLayout fullScreenConstraintsWithVFLForView:self.tableView];
 }
 
 
--(NSArray *)allReservations {
+-(NSFetchedResultsController *)allReservations {
     if (!_allReservations) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         
-        NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
+//        NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
         
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
+        NSFetchRequest *reservationRequest = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
         
-        NSError *fetchError;
-        NSArray *reservations = [context executeFetchRequest:request error:&fetchError];
+        NSSortDescriptor *hotelDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"room.hotel.name" ascending:YES];
+        NSSortDescriptor *roomNumberDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"room.number" ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:hotelDescriptor, roomNumberDescriptor, nil];
         
-        if (fetchError) {
-            NSLog(@"There was an error fetching reservations from core data!");
-        }
+        reservationRequest.sortDescriptors = sortDescriptors;
         
-        _allReservations = reservations;
+        
+        _allReservations = [[NSFetchedResultsController alloc]initWithFetchRequest:reservationRequest managedObjectContext:appDelegate.persistentContainer.viewContext sectionNameKeyPath:@"room.hotel.name" cacheName:nil];
+        
+//  
+        
+        NSError *reservationError;
+        [_allReservations performFetch:&reservationError];
+        
+        
+
     }
     
     return _allReservations;
@@ -102,84 +115,45 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if (_isSearching) {
-        return [_filteredList count];
-    } else {
-        return [_allReservations count];
-    }
+    return  self.allReservations.sections.count;
     
-//    return _allReservations.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"lookupCell" forIndexPath:indexPath];
-    
-//    Reservation *reservation = self.allReservations[indexPath.row];
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@", reservation.startDate];
-
-    if (_isSearching) {
-        cell.textLabel.text = [_filteredList objectAtIndex:indexPath.row];
-    }
-    else {
-        cell.textLabel.text = [_list objectAtIndex:indexPath.row];
-    }
+    Reservation *reservation = [self.allReservations objectAtIndexPath:indexPath];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", reservation.startDate];
     
     return cell;
-}
-
-- (void)searchTableList {
-    NSString *searchString = _searchBar.text;
-    
-    for (NSString *tempStr in _list) {
-        NSComparisonResult result = [tempStr compare:searchString options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchString length])];
-        if (result == NSOrderedSame) {
-            [_filteredList addObject:tempStr];
-        }
-    }
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     _isSearching = YES;
 }
 
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
-    return YES;
-}
-
--(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    
-    [_filteredList removeAllObjects];
-    
-    if([searchText length] != 0) {
-        _isSearching = YES;
-        [self searchTableList];
-    }
-    else {
-        _isSearching = NO;
-    }
-    
-    
-}
-
-
-- (void)willPresentSearchController:(UISearchController *)searchController
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        searchController.searchResultsController.view.hidden = NO;
-    });
-}
-
-- (void)didPresentSearchController:(UISearchController *)searchController
-{
-    searchController.searchResultsController.view.hidden = NO;
-}
-
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     NSLog(@"Search Clicked");
-    [self searchTableList];
 }
+
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    
+    
+}
+
+//-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    
+//    [_filteredList removeAllObjects];
+//    
+//    if([searchText length] != 0) {
+//        _isSearching = YES;
+//    }
+//    else {
+//        _isSearching = NO;
+//    }
+//    
+//    
+//}
 
 
 
