@@ -117,7 +117,6 @@
     
     UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-//    Room *currentRoom = self.availableRooms[indexPath.row];
     Room *currentRoom = [self.availableRooms objectAtIndexPath:indexPath];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%i", currentRoom.number];

@@ -12,10 +12,7 @@
 
 #import "AppDelegate.h"
 
-
-
 @interface LookupReservationViewController () <UITableViewDataSource, UITableViewDelegate, UISearchResultsUpdating>
-
 
 @property(strong, nonatomic)UISearchBar *searchBar;
 @property(strong, nonatomic)UISearchController *searchBarController;
@@ -51,8 +48,7 @@
     
     _list = [[NSMutableArray alloc]initWithObjects:@"iphone", @"ipod",@"macbook", nil];
     _filteredList = [[NSMutableArray alloc]init];
-    
-    
+
 }
 
 -(void)setupSearchBar {
@@ -68,9 +64,7 @@
     _searchBarController.hidesNavigationBarDuringPresentation = false;
     _searchBarController.dimsBackgroundDuringPresentation = false;
 
-    
 }
-
 
 -(void)setupTableView {
     self.tableView = [[UITableView alloc]init];
@@ -88,34 +82,35 @@
     if (!_allReservations) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         
-//        NSManagedObjectContext *context = appDelegate.persistentContainer.viewContext;
-        
         NSFetchRequest *reservationRequest = [NSFetchRequest fetchRequestWithEntityName:@"Reservation"];
         
-        NSSortDescriptor *hotelDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"room.hotel.name" ascending:YES];
+        NSSortDescriptor *hotelDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"hotel.name" ascending:YES];
         NSSortDescriptor *roomNumberDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"room.number" ascending:YES];
         NSArray *sortDescriptors = [NSArray arrayWithObjects:hotelDescriptor, roomNumberDescriptor, nil];
         
-        reservationRequest.sortDescriptors = sortDescriptors;
+        reservationRequest.sortDescriptors = @[sortDescriptors];
+        reservationRequest.sortDescriptors = @[roomNumberDescriptor];
         
-        
-        _allReservations = [[NSFetchedResultsController alloc]initWithFetchRequest:reservationRequest managedObjectContext:appDelegate.persistentContainer.viewContext sectionNameKeyPath:@"room.hotel.name" cacheName:nil];
-        
-//  
+        _allReservations = [[NSFetchedResultsController alloc]initWithFetchRequest:reservationRequest managedObjectContext:appDelegate.persistentContainer.viewContext sectionNameKeyPath:@"hotel.name" cacheName:nil];
         
         NSError *reservationError;
         [_allReservations performFetch:&reservationError];
         
-        
-
     }
     
     return _allReservations;
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
+    return self.allReservations.sections.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return  self.allReservations.sections.count;
+    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.allReservations sections] objectAtIndex:section];
+    
+    return sectionInfo.numberOfObjects;
     
 }
 
@@ -123,7 +118,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"lookupCell" forIndexPath:indexPath];
     Reservation *reservation = [self.allReservations objectAtIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", reservation.startDate];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", reservation.room];
     
     return cell;
 }
